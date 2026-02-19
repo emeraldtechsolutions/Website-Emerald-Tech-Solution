@@ -24,6 +24,7 @@ export function useAuth() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        // Cek session yang sudah ada
         const {
           data: { session },
           error: sessionError,
@@ -36,7 +37,10 @@ export function useAuth() {
         }
 
         if (session?.user) {
+          console.log('Session found, loading profile:', session.user.email)
           await loadUserProfile(session.user)
+        } else {
+          console.log('No session found')
         }
         setIsInitialized(true)
       } catch (err) {
@@ -51,6 +55,8 @@ export function useAuth() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session?.user?.email)
+      
       if (session?.user) {
         await loadUserProfile(session.user)
       } else {
@@ -118,16 +124,28 @@ export function useAuth() {
           data: {
             full_name: fullName,
           },
+          emailRedirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`,
         },
       })
 
       if (signupError) {
+        console.error('Signup error:', signupError)
         setError(signupError.message || 'Gagal mendaftar')
         return false
       }
 
+      // Log signup response untuk debugging
+      console.log('Signup response:', data)
+
+      // Jika email_confirmed_at null, berarti perlu verifikasi email
+      if (data.user && !data.user.email_confirmed_at) {
+        console.log('Email verification required:', data.user.email)
+        // User masih perlu verifikasi email
+      }
+
       return true
     } catch (err) {
+      console.error('Signup exception:', err)
       setError(err instanceof Error ? err.message : 'Terjadi kesalahan saat mendaftar')
       return false
     } finally {

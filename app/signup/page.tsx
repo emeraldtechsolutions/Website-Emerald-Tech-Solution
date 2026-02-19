@@ -54,15 +54,25 @@ export default function SignupPage() {
       return
     }
 
+    console.log('📝 Attempting signup with email:', formData.email)
     const success = await signup(formData.email, formData.password, formData.name)
     
     if (success) {
-      setSuccessMessage('Pendaftaran berhasil! Silakan check email Anda untuk verifikasi.')
+      console.log('✅ Signup successful!')
+      setSuccessMessage(
+        '✅ Pendaftaran berhasil!\n\n' +
+        'Jika email verification DIAKTIFKAN:\n' +
+        '📧 Silakan check email Anda untuk verification link.\n\n' +
+        'Jika email verification DINONAKTIFKAN:\n' +
+        '✨ Anda bisa langsung login dengan email & password.'
+      )
       setFormData({ name: '', email: '', password: '', confirmPassword: '' })
-      // Redirect to login after 2 seconds
+      // Redirect to login after 3 seconds
       setTimeout(() => {
         router.push('/login')
-      }, 2000)
+      }, 3000)
+    } else {
+      console.error('❌ Signup failed:', authError)
     }
   }
 

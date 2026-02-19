@@ -28,9 +28,15 @@ export default function LoginPage() {
       return
     }
 
+    console.log('🔓 Attempting login with email:', email)
     const success = await loginWithEmail(email, password)
+    
     if (!success) {
-      setLocalError(authError || 'Login gagal')
+      const errorMsg = authError || 'Login gagal'
+      console.error('❌ Login failed:', errorMsg)
+      setLocalError(errorMsg)
+    } else {
+      console.log('✅ Login successful!')
     }
   }
 

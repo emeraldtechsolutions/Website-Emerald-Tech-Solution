@@ -105,6 +105,34 @@ CREATE POLICY "Users can update their own profile"
   USING (auth.uid() = id);
 ```
 
+### ⚠️ PENTING: Email Verification Configuration
+
+**Supabase default memerlukan email verification sebelum user bisa login!**
+
+#### Untuk Development (Recommended):
+Disable email verification untuk testing yang lebih mudah:
+
+1. Buka Supabase Dashboard
+2. **Authentication** → **Providers**
+3. Cari **Email** provider
+4. Ubah setting: **"Confirm email"** → **Disabled** (atau equivalent)
+5. Click **Save**
+
+Sekarang user bisa signup dan langsung login tanpa verify email.
+
+#### Untuk Production:
+Gunakan email verification untuk security:
+
+1. Keep email confirmation **enabled**
+2. Setup email provider:
+   - Supabase (built-in, limited)
+   - SendGrid (recommended)
+   - AWS SES
+3. Users akan terima verification link via email
+4. Harus click link sebelum bisa login
+
+**Reference:** [AUTH_INFINITE_LOOP_FIX.md](./AUTH_INFINITE_LOOP_FIX.md) untuk detailed troubleshooting
+
 ### 5. Install Dependencies
 
 ```bash

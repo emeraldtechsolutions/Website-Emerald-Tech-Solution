@@ -1,14 +1,36 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Create Supabase client for browser
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+
+// Validate environment variables
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('❌ Missing Supabase environment variables!')
+  console.error('NEXT_PUBLIC_SUPABASE_URL:', supabaseUrl ? '✅' : '❌')
+  console.error('NEXT_PUBLIC_SUPABASE_ANON_KEY:', supabaseAnonKey ? '✅' : '❌')
+}
+
+// Create Supabase client with proper configuration for session persistence
 export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  supabaseUrl,
+  supabaseAnonKey,
+  {
+    auth: {
+      // Enable session persistence
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      // Custom storage for localStorage
+      storage: typeof window !== 'undefined' 
+        ? window.localStorage
+        : undefined,
+    },
+  }
 )
 
 export const supabaseConfig = {
-  url: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+  url: supabaseUrl,
+  anonKey: supabaseAnonKey,
 }
 
 // Email khusus admin
@@ -21,3 +43,4 @@ export const tables = {
   modules: 'modules',
   portfolio: 'portfolio_projects',
 }
+

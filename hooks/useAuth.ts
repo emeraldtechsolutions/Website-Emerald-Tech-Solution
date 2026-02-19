@@ -157,22 +157,32 @@ export function useAuth() {
     setIsLoading(true)
     setError(null)
     try {
+      console.log('🔓 Attempting email login:', email)
+      
       const { data, error: loginError } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
       if (loginError) {
+        console.error('❌ Login error:', loginError.message)
         setError(loginError.message || 'Email atau password salah')
         return false
       }
 
       if (data.user) {
+        console.log('✅ Email login successful:', data.user.email)
+        console.log('📝 Loading user profile...')
         await loadUserProfile(data.user)
+        
+        // Wait a bit for profile to be loaded
+        await new Promise(resolve => setTimeout(resolve, 500))
+        console.log('✅ Profile loaded, authentication complete')
       }
 
       return true
     } catch (err) {
+      console.error('❌ Login exception:', err)
       setError(err instanceof Error ? err.message : 'Terjadi kesalahan saat login')
       return false
     } finally {

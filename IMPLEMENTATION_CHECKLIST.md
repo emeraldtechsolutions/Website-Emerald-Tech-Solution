@@ -7,7 +7,7 @@
 ## 📋 Phase 1: Development Setup (Day 1)
 
 ### Environment Preparation
-- [ ] Node.js v18+ installed (`node --version`)
+- [X] Node.js v18+ installed (`node --version`)
 - [ ] npm/yarn installed and working
 - [ ] Git installed and configured
 - [ ] VS Code installed (recommended)

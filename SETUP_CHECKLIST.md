@@ -26,12 +26,12 @@ Ikuti langkah-langkah ini untuk menyelesaikan setup sistem login.
 
 ## Phase 3: Local Configuration
 
-- [ ] Copy `.env.local.example` ke `.env.local`:
+- [X] Copy `.env.local.example` ke `.env.local`:
   ```bash
   cp .env.local.example .env.local
   ```
 
-- [ ] Edit `.env.local` dan isi:
+- [X] Edit `.env.local` dan isi:
   ```
   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-from-supabase
@@ -39,8 +39,8 @@ Ikuti langkah-langkah ini untuk menyelesaikan setup sistem login.
   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
   ```
 
-- [ ] **IMPORTANT**: Jangan commit `.env.local` ke git!
-- [ ] Tambahkan ke `.gitignore` (biasanya sudah ada):
+- [X] **IMPORTANT**: Jangan commit `.env.local` ke git!
+- [X] Tambahkan ke `.gitignore` (biasanya sudah ada):
   ```
   .env.local
   .env.*.local
@@ -48,9 +48,9 @@ Ikuti langkah-langkah ini untuk menyelesaikan setup sistem login.
 
 ## Phase 4: Installation & Testing
 
-- [ ] Jalankan: `npm install`
-- [ ] Jalankan: `npm run dev`
-- [ ] Buka browser: `http://localhost:3000/login`
+- [X] Jalankan: `npm install`
+- [X] Jalankan: `npm run dev`
+- [X] Buka browser: `http://localhost:3000/login`
 
 ### Test Login Email/Password
 - [ ] Klik "Daftar di sini"

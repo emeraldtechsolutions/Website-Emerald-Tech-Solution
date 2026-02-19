@@ -38,9 +38,31 @@ export default function CallbackPage() {
           // Wait for user profile to be created by trigger
           await new Promise(resolve => setTimeout(resolve, 1000))
           
-          // Redirect to dashboard
-          console.log('🎯 Redirecting to dashboard...')
-          router.push('/dashboard')
+          // Get user role from database
+          const { data: userData, error: userError } = await supabase
+            .from('users')
+            .select('role')
+            .eq('id', session.user.id)
+            .single()
+          
+          if (userError) {
+            console.warn('⚠️ Could not get user role:', userError)
+            // Default to dashboard for customer
+            router.push('/dashboard')
+            return
+          }
+          
+          const userRole = userData?.role || 'customer'
+          console.log('👤 User role:', userRole)
+          
+          // Redirect based on role
+          if (userRole === 'admin') {
+            console.log('🎯 Redirecting admin to /admin...')
+            router.push('/admin')
+          } else {
+            console.log('🎯 Redirecting customer to /dashboard...')
+            router.push('/dashboard')
+          }
         } else {
           console.warn('⚠️ No session found, redirecting to login')
           router.push('/login')

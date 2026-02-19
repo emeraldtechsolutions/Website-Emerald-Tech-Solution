@@ -116,21 +116,26 @@ Vercel biasanya sudah auto-detect ini, tapi verify untuk memastikan.
 
 ---
 
-## 📝 Vercel Configuration File
+## 📝 Vercel Configuration Files
 
-File `vercel.json` sudah included dengan config:
+Sudah included 2 configuration files:
 
+**1. `vercel.json`** - Vercel build configuration:
 ```json
 {
   "buildCommand": "next build",
   "devCommand": "next dev",
   "installCommand": "npm install",
-  "framework": "nextjs",
-  "nodeVersion": "18.x"
+  "framework": "nextjs"
 }
 ```
 
-Jika perlu customize, edit file ini.
+**2. `.nvmrc`** - Node.js version specification:
+```
+18
+```
+
+Vercel akan otomatis detect Node.js version dari `.nvmrc` file (tidak perlu `nodeVersion` di `vercel.json`).
 
 ---
 

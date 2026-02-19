@@ -2,10 +2,19 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { BarChart3, DollarSign, Clock, AlertCircle, Download, Menu, X } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { BarChart3, DollarSign, Clock, AlertCircle, Download, Menu, X, LogOut } from 'lucide-react'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { ProtectedRoute } from '@/components/ProtectedRoute'
 
-export default function DashboardPage() {
+function DashboardContent() {
+  const router = useRouter()
+  const { user, logout } = useAuthContext()
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+
+  const handleLogout = async () => {
+    await logout()
+  }
 
   const projectProgress = [
     { id: 1, name: 'Aplikasi POS Toko A', progress: 75, status: 'In Progress', dueDate: '2026-03-15' },
@@ -33,8 +42,16 @@ export default function DashboardPage() {
             <h1 className="text-2xl font-bold text-primary">Dashboard</h1>
           </div>
           <div className="flex items-center gap-4">
-            <button className="px-4 py-2 text-slate-600 hover:text-primary">📧 Notifikasi</button>
-            <button className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-accent">👤 Profile</button>
+            <span className="text-sm font-semibold text-slate-600">
+              {user?.role === 'admin' && '👤 Admin - '}
+              {user?.name || user?.email}
+            </span>
+            <button 
+              onClick={() => router.push('/profile')}
+              className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-accent transition"
+            >
+              👤 Profile
+            </button>
           </div>
         </div>
       </nav>
@@ -45,12 +62,12 @@ export default function DashboardPage() {
           <aside className="w-64 bg-white border-r border-primary p-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
             <nav className="space-y-4">
               {[
-                { label: 'Beranda', icon: '🏠', href: '#' },
-                { label: 'Proyek Saya', icon: '📋', href: '#' },
-                { label: 'Pembayaran', icon: '💳', href: '#' },
-                { label: 'Dokumentasi', icon: '📚', href: '#' },
+                { label: 'Beranda', icon: '🏠', href: '/dashboard' },
+                { label: 'Proyek Saya', icon: '📋', href: '/dashboard' },
+                { label: 'Pembayaran', icon: '💳', href: '/dashboard' },
+                { label: 'Dokumentasi', icon: '📚', href: '/docs' },
                 { label: 'Support', icon: '🆘', href: '#' },
-                { label: 'Pengaturan', icon: '⚙️', href: '#' },
+                { label: 'Pengaturan', icon: '⚙️', href: '/profile' },
               ].map((item) => (
                 <Link
                   key={item.label}
@@ -63,9 +80,29 @@ export default function DashboardPage() {
               ))}
             </nav>
 
+            {/* Admin Section */}
+            {user?.role === 'admin' && (
+              <div className="mt-8 pt-6 border-t border-primary">
+                <p className="text-xs font-bold text-primary mb-3 uppercase">Admin Panel</p>
+                <nav className="space-y-2">
+                  <Link
+                    href="/admin"
+                    className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-secondary transition font-medium text-primary"
+                  >
+                    <span>⚡</span>
+                    <span>Admin Dashboard</span>
+                  </Link>
+                </nav>
+              </div>
+            )}
+
             {/* Logout Button */}
             <div className="mt-8 pt-6 border-t border-primary">
-              <button className="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-accent transition font-semibold">
+              <button
+                onClick={handleLogout}
+                className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-semibold flex items-center justify-center gap-2"
+              >
+                <LogOut size={18} />
                 Keluar
               </button>
             </div>
@@ -191,3 +228,12 @@ export default function DashboardPage() {
     </div>
   )
 }
+
+export default function DashboardPage() {
+  return (
+    <ProtectedRoute>
+      <DashboardContent />
+    </ProtectedRoute>
+  )
+}
+

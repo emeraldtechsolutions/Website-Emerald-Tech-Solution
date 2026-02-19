@@ -3,9 +3,10 @@ export interface User {
   id: string
   email: string
   name: string
-  company: string
-  role: 'admin' | 'user'
-  createdAt: Date
+  company?: string
+  role: 'admin' | 'customer'
+  avatar?: string
+  createdAt?: Date
 }
 
 // Project Types

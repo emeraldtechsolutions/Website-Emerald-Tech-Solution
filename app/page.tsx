@@ -60,7 +60,7 @@ export default function Home() {
               <div key={idx} className="bg-secondary rounded-lg p-8 border border-primary hover:shadow-lg transition">
                 <div className="text-5xl mb-4">{feature.icon}</div>
                 <h3 className="text-2xl font-bold mb-3 text-primary">{feature.title}</h3>
-                <p className="text-slate-600">{feature.description}</p>
+                <p className="text-slate-800">{feature.description}</p>
               </div>
             ))}
           </div>

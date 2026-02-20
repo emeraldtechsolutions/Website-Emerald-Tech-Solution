@@ -12,7 +12,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center">
         <div className="flex justify-between items-center w-full">
           <Link href="/" className="text-2xl font-bold text-primary">
-            🟢 Emerald Tech
+            🟢 Emerald Tech Solution
           </Link>
 
           {/* Desktop Menu */}

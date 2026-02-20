@@ -9,8 +9,8 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50 border-b-2 border-primary">
-      <div className="max-w-6xl mx-auto px-6 py-4">
-        <div className="flex justify-between items-center">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center">
+        <div className="flex justify-between items-center w-full">
           <Link href="/" className="text-2xl font-bold text-primary">
             🟢 Emerald Tech
           </Link>
@@ -43,7 +43,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+          {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden mt-4 space-y-4">
             <Link href="/" onClick={() => setIsOpen(false)} className="block hover:text-primary transition font-medium">

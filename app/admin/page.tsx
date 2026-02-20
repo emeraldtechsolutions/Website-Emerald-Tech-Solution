@@ -78,39 +78,51 @@ function AdminContent() {
       <div className="flex">
         {/* Sidebar */}
         {isSidebarOpen && (
-          <aside className="w-64 bg-white border-r border-primary p-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
-            <nav className="space-y-4">
-              {[
-                { label: 'Dashboard', icon: '📊', href: '/admin' },
-                { label: 'Users Management', icon: '👥', href: '/admin/users' },
-                { label: 'Projects', icon: '📋', href: '/admin/projects' },
-                { label: 'Invoices', icon: '💳', href: '/admin/invoices' },
-                { label: 'Analytics', icon: '📈', href: '/admin/analytics' },
-                { label: 'Settings', icon: '⚙️', href: '/admin/settings' },
-              ].map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-secondary transition font-medium text-primary"
-                >
-                  <span>{item.icon}</span>
-                  <span>{item.label}</span>
-                </Link>
-              ))}
-            </nav>
-
-            {/* Logout Button */}
-            <div className="mt-8 pt-6 border-t border-primary">
-              <button
-                onClick={handleLogout}
-                className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-semibold flex items-center justify-center gap-2"
-              >
-                <LogOut size={18} />
-                Logout
-              </button>
-            </div>
-          </aside>
+          <div
+            className="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
         )}
+
+        <aside
+          className={
+            isSidebarOpen
+              ? 'fixed left-0 top-16 z-40 w-64 bg-white border-r border-primary p-6 h-[calc(100vh-64px)] overflow-y-auto md:block'
+              : 'hidden md:block md:w-64 bg-white border-r border-primary p-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto'
+          }
+        >
+          <nav className="space-y-4">
+            {[
+              { label: 'Dashboard', icon: '📊', href: '/admin' },
+              { label: 'Users Management', icon: '👥', href: '/admin/users' },
+              { label: 'Projects', icon: '📋', href: '/admin/projects' },
+              { label: 'Invoices', icon: '💳', href: '/admin/invoices' },
+              { label: 'Analytics', icon: '📈', href: '/admin/analytics' },
+              { label: 'Settings', icon: '⚙️', href: '/admin/settings' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={() => setIsSidebarOpen(false)}
+                className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-secondary transition font-medium text-primary"
+              >
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* Logout Button */}
+          <div className="mt-8 pt-6 border-t border-primary">
+            <button
+              onClick={() => { setIsSidebarOpen(false); handleLogout() }}
+              className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-semibold flex items-center justify-center gap-2"
+            >
+              <LogOut size={18} />
+              Logout
+            </button>
+          </div>
+        </aside>
 
         {/* Main Content */}
         <main className="flex-1 p-6 space-y-6">

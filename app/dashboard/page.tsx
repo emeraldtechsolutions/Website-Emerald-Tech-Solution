@@ -58,56 +58,70 @@ function DashboardContent() {
 
       <div className="flex">
         {/* Sidebar */}
+        {/* Mobile overlay + responsive sidebar: fixed overlay on small screens, persistent on md+ */}
         {isSidebarOpen && (
-          <aside className="w-64 bg-white border-r border-primary p-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
-            <nav className="space-y-4">
-              {[
-                { label: 'Beranda', icon: '🏠', href: '/dashboard' },
-                { label: 'Proyek Saya', icon: '📋', href: '/dashboard' },
-                { label: 'Pembayaran', icon: '💳', href: '/dashboard' },
-                { label: 'Dokumentasi', icon: '📚', href: '/docs' },
-                { label: 'Support', icon: '🆘', href: '#' },
-                { label: 'Pengaturan', icon: '⚙️', href: '/profile' },
-              ].map((item) => (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+
+        <aside
+          className={
+            isSidebarOpen
+              ? 'fixed left-0 top-16 z-40 w-64 bg-white border-r border-primary p-6 h-[calc(100vh-64px)] overflow-y-auto md:block'
+              : 'hidden md:block md:w-64 bg-white border-r border-primary p-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto'
+          }
+        >
+          <nav className="space-y-4">
+            {[
+              { label: 'Beranda', icon: '🏠', href: '/dashboard' },
+              { label: 'Proyek Saya', icon: '📋', href: '/dashboard' },
+              { label: 'Pembayaran', icon: '💳', href: '/dashboard' },
+              { label: 'Dokumentasi', icon: '📚', href: '/docs' },
+              { label: 'Support', icon: '🆘', href: '#' },
+              { label: 'Pengaturan', icon: '⚙️', href: '/profile' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={() => setIsSidebarOpen(false)}
+                className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-secondary transition font-medium text-primary"
+              >
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* Admin Section */}
+          {user?.role === 'admin' && (
+            <div className="mt-8 pt-6 border-t border-primary">
+              <p className="text-xs font-bold text-primary mb-3 uppercase">Admin Panel</p>
+              <nav className="space-y-2">
                 <Link
-                  key={item.label}
-                  href={item.href}
+                  href="/admin"
+                  onClick={() => setIsSidebarOpen(false)}
                   className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-secondary transition font-medium text-primary"
                 >
-                  <span>{item.icon}</span>
-                  <span>{item.label}</span>
+                  <span>⚡</span>
+                  <span>Admin Dashboard</span>
                 </Link>
-              ))}
-            </nav>
-
-            {/* Admin Section */}
-            {user?.role === 'admin' && (
-              <div className="mt-8 pt-6 border-t border-primary">
-                <p className="text-xs font-bold text-primary mb-3 uppercase">Admin Panel</p>
-                <nav className="space-y-2">
-                  <Link
-                    href="/admin"
-                    className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-secondary transition font-medium text-primary"
-                  >
-                    <span>⚡</span>
-                    <span>Admin Dashboard</span>
-                  </Link>
-                </nav>
-              </div>
-            )}
-
-            {/* Logout Button */}
-            <div className="mt-8 pt-6 border-t border-primary">
-              <button
-                onClick={handleLogout}
-                className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-semibold flex items-center justify-center gap-2"
-              >
-                <LogOut size={18} />
-                Keluar
-              </button>
+              </nav>
             </div>
-          </aside>
-        )}
+          )}
+
+          {/* Logout Button */}
+          <div className="mt-8 pt-6 border-t border-primary">
+            <button
+              onClick={() => { setIsSidebarOpen(false); handleLogout() }}
+              className="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-semibold flex items-center justify-center gap-2"
+            >
+              <LogOut size={18} />
+              Keluar
+            </button>
+          </div>
+        </aside>
 
         {/* Main Content */}
         <main className="flex-1 p-6 space-y-6">

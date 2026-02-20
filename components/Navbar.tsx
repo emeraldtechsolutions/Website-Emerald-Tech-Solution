@@ -46,19 +46,19 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden mt-4 space-y-4">
-            <Link href="/" className="block hover:text-primary transition font-medium">
+            <Link href="/" onClick={() => setIsOpen(false)} className="block hover:text-primary transition font-medium">
               Beranda
             </Link>
-            <Link href="/portfolio" className="block hover:text-primary transition font-medium">
+            <Link href="/portfolio" onClick={() => setIsOpen(false)} className="block hover:text-primary transition font-medium">
               Portfolio
             </Link>
-            <Link href="/estimator" className="block hover:text-primary transition font-medium">
+            <Link href="/estimator" onClick={() => setIsOpen(false)} className="block hover:text-primary transition font-medium">
               Estimasi Harga
             </Link>
-            <Link href="/docs" className="block hover:text-primary transition font-medium">
+            <Link href="/docs" onClick={() => setIsOpen(false)} className="block hover:text-primary transition font-medium">
               Dokumentasi
             </Link>
-            <Link href="/login" className="block px-6 py-2 bg-primary text-white rounded-lg hover:bg-accent transition font-medium">
+            <Link href="/login" onClick={() => setIsOpen(false)} className="block px-6 py-2 bg-primary text-white rounded-lg hover:bg-accent transition font-medium">
               Login
             </Link>
           </div>

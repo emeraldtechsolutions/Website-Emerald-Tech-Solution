@@ -6,9 +6,10 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-slate-900 text-white py-12">
+    <footer className="bg-slate-900 text-white md:py-12 py-0 fixed md:static bottom-0 left-0 right-0 h-24 md:h-auto z-40">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+        {/* Desktop / tablet footer */}
+        <div className="hidden md:grid md:grid-cols-4 gap-8 mb-8">
           {/* About */}
           <div>
             <h3 className="text-2xl font-bold text-primary mb-4">🟢 Emerald Tech</h3>
@@ -52,7 +53,18 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-primary pt-8 text-center text-slate-400">
+        {/* Mobile compact footer (fixed) */}
+        <div className="md:hidden h-24 flex items-center justify-between px-4">
+          <div>
+            <h3 className="text-lg font-bold text-primary">🟢 Emerald Tech</h3>
+            <p className="text-slate-400 text-sm">&copy; {currentYear}</p>
+          </div>
+          <div className="text-right">
+            <Link href="#" className="text-slate-400 hover:text-primary text-sm">Kontak</Link>
+          </div>
+        </div>
+
+        <div className="hidden md:block border-t border-primary pt-8 text-center text-slate-400">
           <p>&copy; {currentYear} Emerald Tech Solution. Semua hak dilindungi.</p>
         </div>
       </div>

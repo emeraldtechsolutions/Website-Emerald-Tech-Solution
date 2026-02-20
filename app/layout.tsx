@@ -26,8 +26,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Navbar />
-          <main className="min-h-screen pt-16 md:pt-16 pb-24">
-            {children}
+          <main className="pt-16 pb-24 h-screen overflow-hidden">
+            <div style={{ height: 'calc(100vh - 4rem - 6rem)' }} className="overflow-auto">
+              {children}
+            </div>
           </main>
           <Footer />
           <AIChat />

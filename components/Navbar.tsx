@@ -8,7 +8,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50 border-b-2 border-primary">
+    <nav className="bg-white shadow-md fixed top-0 left-0 right-0 z-50 border-b-2 border-primary">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center">
         <div className="flex justify-between items-center w-full">
           <Link href="/" className="text-2xl font-bold text-primary">
@@ -45,7 +45,7 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden mt-4 space-y-4">
+          <div className="md:hidden absolute left-0 right-0 top-full mt-0 bg-white px-6 py-4 space-y-4 z-50 shadow-md">
             <Link href="/" onClick={() => setIsOpen(false)} className="block hover:text-primary transition font-medium">
               Beranda
             </Link>
